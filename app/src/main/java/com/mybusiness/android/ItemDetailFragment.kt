@@ -9,12 +9,18 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.mybusiness.di.CommonInjector
 import com.mybusiness.model.Contact
 import com.mybusiness.presentation.ContactDetail
+import com.mybusiness.presentation.ContactDetailPresenter
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.item_detail.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 
-class ItemDetailFragment : Fragment(), ContactDetail.View  {
+class ItemDetailFragment : Fragment(), ContactDetail.View , KodeinAware {
 
-    private val presenter = CommonInjector.contactDetailPresenter()
+    override val kodein: Kodein by closestKodein()
+    private val presenter by instance<ContactDetailPresenter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
