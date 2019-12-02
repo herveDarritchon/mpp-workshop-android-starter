@@ -46,6 +46,8 @@ class ItemDetailFragment : Fragment(), ContactDetail.View , KodeinAware {
         val toolbarLayout: CollapsingToolbarLayout? = activity?.toolbar_layout
         if (toolbarLayout != null) toolbarLayout.title = contact.fullName
 
+        birthdayTextView.text = contact.birthday.date.format("yyyy-MM-dd")
+
         phonesTextView.text = if (contact.phones.isNotEmpty()) {
             contact.phones.map {
                 "${it.type}: ${it.number}"
