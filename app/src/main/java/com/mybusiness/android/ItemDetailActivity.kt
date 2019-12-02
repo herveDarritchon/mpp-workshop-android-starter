@@ -15,7 +15,14 @@ class ItemDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
-            val fragment = ItemDetailFragment()
+            val fragment = ItemDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString(
+                        ItemDetailFragment.CONTACT_ID,
+                        intent.getStringExtra(ItemDetailFragment.CONTACT_ID)
+                    )
+                }
+            }
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.item_detail_container, fragment)

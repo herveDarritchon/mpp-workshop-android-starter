@@ -1,25 +1,31 @@
 package com.mybusiness.android.utils
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.mybusiness.android.ItemDetailActivity
+import com.mybusiness.android.ItemDetailFragment
 import com.mybusiness.android.ItemListActivity
 import com.mybusiness.android.R
+import com.mybusiness.model.Contact
 import kotlinx.android.synthetic.main.item_list_content.view.*
 
-class EmptyContact // TODO delete and replace by Contact
-
 class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity,
-                                    private val values: List<EmptyContact>) :
+                                    private val values: List<Contact>) :
     RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
 
     init {
         onClickListener = View.OnClickListener { v ->
-            // TODO Set the "on click" action for the contact list
+            val contact = v.tag as Contact
+            val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
+                putExtra(ItemDetailFragment.CONTACT_ID, contact.id)
+            }
+            v.context.startActivity(intent)
         }
     }
 
@@ -30,12 +36,12 @@ class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val contact = values[position]
 
-        // TODO Set the content showed in the RecyclerView
+        holder.contentView.text = contact.fullName
 
         with(holder.itemView) {
-            tag = item
+            tag = contact
             setOnClickListener(onClickListener)
         }
     }
